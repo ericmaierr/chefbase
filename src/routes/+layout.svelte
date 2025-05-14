@@ -24,7 +24,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/rezepte"
-            >Rezepte</a
+            >Meine Rezepte</a
           >
         </li>
       </ul>

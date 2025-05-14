@@ -3,7 +3,7 @@
   const { rezept } = data;
 </script>
 
-<a href="https://chefbase.netlify.app/rezepte">Back</a>
+<a href="https://chefbase.netlify.app/meine_rezepte">Back</a>
 
 <div class="container">
   <img class="poster" src={rezept.poster} alt={"Poster von " + rezept.name} />
