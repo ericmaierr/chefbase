@@ -11,12 +11,6 @@
   <div class="info">
     <h1>{rezept.name}</h1>
     <p><strong>Dauer:</strong> {rezept.length} Minuten</p>
-    <p><strong>Zubereitung</strong></p>
-    <ol>
-      {#each rezept.instructions as instruction}
-        <li>{instruction}</li>
-      {/each}
-    </ol>
     <p><strong>Zutaten</strong></p>
     <ul>
       {#each rezept.zutaten as zutat}
