@@ -7,11 +7,11 @@ await client.connect();
 const db = client.db("chefbasedb"); // select database
 
 //////////////////////////////////////////
-// Rezepte
+// Rezept
 //////////////////////////////////////////
 
-// Get all Rezepte
-async function getRezepte() {
+// Alle Rezepte bekommen
+async function getRecipes() {
   let rezepte = [];
   try {
     const collection = db.collection("rezepte");
@@ -22,7 +22,7 @@ async function getRezepte() {
 
     // Get all objects that match the query
     rezepte = await collection.find(query).toArray();
-    rezept.forEach((rezept) => {
+    rezepte.forEach((rezept) => {
       rezept._id = rezept._id.toString(); // convert ObjectId to String
     });
   } catch (error) {
@@ -32,8 +32,30 @@ async function getRezepte() {
   return rezepte;
 }
 
-// Get Rezept by id
-async function getRezept(id) {
+// Alle empfohlenen Rezepte bekommen
+async function getRecommended() {
+  let rezepte = [];
+  try {
+    const collection = db.collection("rezepte");
+
+    // You can specify a query/filter here
+    // See https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/query-document/
+    const query = { recommended: true };
+
+    // Get all objects that match the query
+    rezepte = await collection.find(query).toArray();
+    rezepte.forEach((rezept) => {
+      rezept._id = rezept._id.toString(); // convert ObjectId to String
+    });
+  } catch (error) {
+    console.log(error);
+    // TODO: errorhandling
+  }
+  return rezepte;
+}
+
+// Rezept gemäss id bekommen
+async function getRecipe(id) {
   let rezept = null;
   try {
     const collection = db.collection("rezepte");
@@ -41,7 +63,7 @@ async function getRezept(id) {
     rezept = await collection.findOne(query);
 
     if (!rezept) {
-      console.log("Kein Rezept gefunden mit id " + id);
+      console.log("Kein Rezept mit id " + id);
       // TODO: errorhandling
     } else {
       rezept._id = rezept._id.toString(); // convert ObjectId to String
@@ -53,19 +75,13 @@ async function getRezept(id) {
   return rezept;
 }
 
-// create Rezept
-// Example Rezept object:
-/* 
-{ 
-  title: "Das Geheimnis von Altura",
-  year: 2024,
-  length: "120 Minuten"
-} 
-*/
-async function createRezept(rezept) {
+// Rezept hinzufügen
+async function createRecipe(rezept) {
   rezept.poster = "/images/placeholder.jpg"; // default poster
-  rezept.actors = [];
-  rezept.watchlist = false;
+  rezept.length = [];
+  rezept.recommended = false;
+  rezept.watchlist = true;
+  rezept.instructions = [];
   try {
     const collection = db.collection("rezepte");
     const result = await collection.insertOne(rezept);
@@ -77,25 +93,11 @@ async function createRezept(rezept) {
   return null;
 }
 
-// update Rezept
-// Example Rezept object:
-/* 
-{ 
-  _id: "6630e72c95e12055f661ff13",
-  title: "Das Geheimnis von Altura",
-  year: 2024,
-  length: "120 Minuten",
-  actors: [
-    "Lena Herzog",
-    "Maximilian Schröder",
-    "Sophia Neumann"
-  ],
-  poster: "/images/Altura.png",
-  watchlist: false
-} 
-*/
-// returns: id of the updated Rezept or null, if Rezept could not be updated
-async function updateRezept(rezept) {
+// Rezept aktualisieren
+
+
+// returns: id of the updated recipe or null, if recipe could not be updated
+async function updateRecipe(rezept) {
   try {
     let id = rezept._id;
     delete rezept._id; // delete the _id from the object, because the _id cannot be updated
@@ -104,10 +106,10 @@ async function updateRezept(rezept) {
     const result = await collection.updateOne(query, { $set: rezept });
 
     if (result.matchedCount === 0) {
-      console.log("Kein Rezept gefunden mit id " + id);
+      console.log("Kein Rezept mit id " + id);
       // TODO: errorhandling
     } else {
-      console.log("Rezept mit id " + id + " wurde geändert.");
+      console.log("Rezept mit id " + id + " wurde aktualisiert.");
       return id;
     }
   } catch (error) {
@@ -117,18 +119,18 @@ async function updateRezept(rezept) {
   return null;
 }
 
-// delete Rezept by id
-// returns: id of the deleted Rezept or null, if Rezept could not be deleted
-async function deleteRezept(id) {
+// Rezept gemäss id löschen
+// returns: id of the deleted recipe or null, if recipe could not be deleted
+async function deleteRecipe(id) {
   try {
     const collection = db.collection("rezepte");
     const query = { _id: new ObjectId(id) }; // filter by id
     const result = await collection.deleteOne(query);
 
     if (result.deletedCount === 0) {
-      console.log("Kein Rezept gefunden mit id " + id);
+      console.log("Kein Rezept mit id " + id);
     } else {
-      console.log("Rezept mit id " + id + " wurde gelöscht.");
+      console.log("Rezept mit id " + id + " wurde erfolgreich gelöscht.");
       return id;
     }
   } catch (error) {
@@ -140,9 +142,10 @@ async function deleteRezept(id) {
 
 // export all functions so that they can be used in other files
 export default {
-  getRezepte,
-  getRezept,
-  createRezept,
-  updateRezept,
-  deleteRezept,
+  getRecipes,
+  getRecommended,
+  getRecipe,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
 };

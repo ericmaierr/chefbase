@@ -3,9 +3,9 @@
   let { data } = $props();
 </script>
 
-<h1>Willkommen bei ChefBase</h1>
-<h2>Deine persönliche Rezeptverwaltung</h2>
-<h3>Empfohlene Rezepte</h3>
+<div>
+  <a href="/rezepte/create" class="btn btn-primary">Neues Rezept hinzufügen</a>
+</div>
 
 <div class="row mt-3">
   {#each data.rezepte as rezept}

@@ -2,14 +2,14 @@
   let { rezept } = $props();
 </script>
 
-<div class="rezept-karte">
+<div class="recipe-card">
   <div>
     <img class="img-fluid" src={rezept.poster} alt="" />
   </div>
   <div class="details">
-    <a href="https://chefbase.netlify.app/meine_rezepte/{rezept._id}">
-      {rezept.name}
-    </a>
+    <div class="name">
+      <a href={"/rezepte/" + rezept._id}>{rezept.name}</a>
+    </div>
     <div>
       Dauer: {rezept.length} min
     </div>
@@ -17,18 +17,16 @@
 </div>
 
 <style>
-  .rezept-karte {
-    border: 1px solid #e3e2c0;
+  .recipe-card {
+    border: 1px solid #555;
     height: 100%;
-    background-color: #e3e2c0;
-    color: #000000;
+    background-color: #444;
+    color: white;
   }
   .details {
     padding: 0.5em;
   }
-  .rezept-karte a {
+  .name {
     font-weight: bold;
-    color: inherit;
-    text-decoration: none;
   }
 </style>

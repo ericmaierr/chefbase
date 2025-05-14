@@ -24,6 +24,11 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/rezepte"
+            >Rezepte</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/rezepte/meine"
             >Meine Rezepte</a
           >
         </li>
