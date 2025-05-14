@@ -3,12 +3,11 @@ import db from '$lib/db.js';
 export const actions = {
 create: async ({ request }) => {
     const data = await request.formData();
-    let movie = {
-title: data.get("title"),
-year: data.get("year"),
+    let rezept = {
+name: data.get("name"),
 length: data.get("length"),
     }
-    await db.createMovie(movie);
+    await db.createRezept(rezept);
     return { success: true }
 }
 }

@@ -1,26 +1,23 @@
 <script>
-  let { movie } = $props();
+  let { rezept } = $props();
 </script>
 
-<div class="movie-card">
+<div class="rezept-karte">
   <div>
-    <img class="img-fluid" src={movie.poster} alt="" />
+    <img class="img-fluid" src={rezept.poster} alt="" />
   </div>
   <div class="details">
-    <a href="http://localhost:5173/movies/{movie._id}">
-      {movie.title}
+    <a href="https://chefbase.netlify.app/rezepte/{rezept._id}">
+      {rezept.name}
     </a>
     <div>
-      Jahr: {movie.year}
-    </div>
-    <div>
-      Dauer: {movie.length}
+      Dauer: {rezept.length}
     </div>
   </div>
 </div>
 
 <style>
-  .movie-card {
+  .rezept-karte {
     border: 1px solid #555;
     height: 100%;
     background-color: #444;
@@ -29,7 +26,7 @@
   .details {
     padding: 0.5em;
   }
-  .movie-card a {
+  .rezept-karte a {
     font-weight: bold;
     color: inherit;
     text-decoration: none;

@@ -1,12 +1,12 @@
 <script>
   export let data;
-  import MovieCard from "$lib/components/MovieCard.svelte";
-  const { movies } = data;
+  import RezeptKarte from "$lib/components/RezeptKarte.svelte";
+  const { rezepte } = data;
 </script>
 
-<a href="http://localhost:5173/movies/create">
+<a href="https://chefbase.netlify.app/rezepte/create">
   <button class="button-create">
-    Add New Movie
+    Neues Rezept hinzufügen
   </button>
 </a>
 
@@ -14,7 +14,7 @@
 <div class="row">
   {#each movies as movie}
     <div class="col-sm-6 col-md-4 col-lg-3 mb-2 gx-2">
-      <MovieCard movie={movie}></MovieCard>
+      <RezeptKarte rezept={rezept}></RezeptKarte>
     </div>
   {/each}
 </div>

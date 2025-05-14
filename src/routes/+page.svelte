@@ -1,2 +1,2 @@
-<h1>Welcome to ScreenStack</h1>
-<p>Your tracker and search engine for movies and tv shows</p>
+<h1>Wilkommen bei ChefBase</h1>
+<p>Rezepte im Trend</p>
