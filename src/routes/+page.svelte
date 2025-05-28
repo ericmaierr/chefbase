@@ -4,8 +4,7 @@
 </script>
 
 <h1>Willkommen bei ChefBase</h1>
-<h2>Deine persönliche Rezeptverwaltung</h2>
-<h3>Empfohlene Rezepte</h3>
+<h2>Empfohlene Rezepte</h2>
 
 <div class="row mt-3">
   {#each data.rezepte as rezept}

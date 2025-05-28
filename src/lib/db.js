@@ -6,9 +6,11 @@ const client = new MongoClient(DB_URI);
 await client.connect();
 const db = client.db("chefbasedb"); // select database
 
-//////////////////////////////////////////
-// Rezept
-//////////////////////////////////////////
+function parseId(id) {
+  return (ObjectId.isValid(id) && /^[0-9a-fA-F]{24}$/.test(id))
+    ? new ObjectId(id)
+    : id;
+}
 
 // Alle Rezepte bekommen
 async function getRecipes() {
@@ -54,12 +56,34 @@ async function getRecommended() {
   return rezepte;
 }
 
+// Alle gespeicherten Rezepte bekommen
+async function getWatchlist() {
+  let rezepte = [];
+  try {
+    const collection = db.collection("rezepte");
+
+    // You can specify a query/filter here
+    // See https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/query-document/
+    const query = { watchlist: true };
+
+    // Get all objects that match the query
+    rezepte = await collection.find(query).toArray();
+    rezepte.forEach((rezept) => {
+      rezept._id = rezept._id.toString(); // convert ObjectId to String
+    });
+  } catch (error) {
+    console.log(error);
+    // TODO: errorhandling
+  }
+  return rezepte;
+}
+
 // Rezept gemäss id bekommen
 async function getRecipe(id) {
   let rezept = null;
   try {
     const collection = db.collection("rezepte");
-    const query = { _id: new ObjectId(id) }; // filter by id
+    const query = { _id: parseId(id) }; // filter by id
     rezept = await collection.findOne(query);
 
     if (!rezept) {
@@ -78,10 +102,8 @@ async function getRecipe(id) {
 // Rezept hinzufügen
 async function createRecipe(rezept) {
   rezept.poster = "/images/placeholder.jpg"; // default poster
-  rezept.length = [];
   rezept.recommended = false;
   rezept.watchlist = true;
-  rezept.instructions = [];
   try {
     const collection = db.collection("rezepte");
     const result = await collection.insertOne(rezept);
@@ -102,9 +124,10 @@ async function updateRecipe(rezept) {
     let id = rezept._id;
     delete rezept._id; // delete the _id from the object, because the _id cannot be updated
     const collection = db.collection("rezepte");
-    const query = { _id: new ObjectId(id) }; // filter by id
+    const query = { _id: parseId(id) }; // filter by id
     const result = await collection.updateOne(query, { $set: rezept });
 
+  
     if (result.matchedCount === 0) {
       console.log("Kein Rezept mit id " + id);
       // TODO: errorhandling
@@ -124,7 +147,7 @@ async function updateRecipe(rezept) {
 async function deleteRecipe(id) {
   try {
     const collection = db.collection("rezepte");
-    const query = { _id: new ObjectId(id) }; // filter by id
+    const query = { _id: parseId(id) }; // filter by id
     const result = await collection.deleteOne(query);
 
     if (result.deletedCount === 0) {
@@ -140,12 +163,53 @@ async function deleteRecipe(id) {
   return null;
 }
 
+export async function createIngredient(name) {
+  const col = db.collection("zutaten");
+  // Suche case-insensitive
+  const existing = await col.findOne({
+    name: { $regex: `^${name.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")}$`, $options: "i" }
+  });
+  if (existing) {
+    return existing._id.toString();
+  }
+  // Neu anlegen
+  const result = await col.insertOne({ name });
+  return result.insertedId.toString();
+}
+
+export async function createRecipeIngredient({ rezept_id, ingredient_id, quantity, unit }) {
+  const col = db.collection("rezeptzutaten");
+  await col.insertOne({ rezept_id, ingredient_id, quantity, unit });
+}
+
+export async function getRecipeIngredients(rezeptId) {
+  const col = db.collection("rezeptzutaten");
+  const entries = await col.find({ rezept_id: rezeptId }).toArray();
+  return entries.map(e => ({
+    // wir brauchen nur Menge, Einheit und die Zutat‐ID weiter unten
+    ingredient_id: e.ingredient_id,
+    quantity: e.quantity,
+    unit: e.unit
+  }));
+}
+
+export async function getIngredient(id) {
+  const col = db.collection("zutaten");
+  const doc = await col.findOne({ _id: parseId(id) });
+  return doc ? { id: doc._id.toString(), name: doc.name } : null;
+}
+
 // export all functions so that they can be used in other files
 export default {
   getRecipes,
   getRecommended,
+  getWatchlist,
   getRecipe,
+  getIngredient,
+  getRecipeIngredients,
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  createIngredient,
+  createRecipeIngredient,
 };

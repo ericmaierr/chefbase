@@ -1,7 +1,6 @@
 import db from "$lib/db.js";
 
 export async function load() {
-  return {
-    rezepte: await db.getRecipes()
-  };
+  const rezepte = await db.getRecipes();
+  return { rezepte };
 }

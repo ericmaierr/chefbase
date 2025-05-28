@@ -3,7 +3,7 @@
 </script>
 
 <div class="recipe-card">
-  <div>
+    <div>
     <img class="img-fluid" src={rezept.poster} alt="" />
   </div>
   <div class="details">
