@@ -1,4 +1,17 @@
 body {
-    background-color: black;
-    color: white;
+    background-color: #F5F1E9;
+    color: #800020;
+}
+
+.navbar {
+  background-color: #800020;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #F5F1E9;
+}
+
+.navbar .nav-link:hover {
+  opacity: 0.8;
 }

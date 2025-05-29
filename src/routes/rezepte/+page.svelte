@@ -8,20 +8,28 @@
     if (filter === "") {
       return data.rezepte;
     }
-    const regex = new RegExp(`^${filter}`, "i");
-    return data.rezepte.filter(r => regex.test(r.name));
+    const regex = new RegExp(`\\b${filter}`, "i");
+    return data.rezepte.filter((r) => regex.test(r.name));
   });
 </script>
 
-<section class="p-4">
-  <input
-    type="text"
-    placeholder="Rezepte suchen..."
-    aria-label="Rezepte suchen"
-    bind:value={filter}
-    class="border rounded px-2 py-1 w-full mb-4"
-  />
+<header>
+  <h2>Alle Rezepte</h2>
 
+  <div class="search">
+    <input
+      type="text"
+      placeholder="Rezepte suchen..."
+      aria-label="Rezepte suchen"
+      bind:value={filter}
+      class="border rounded px-2 py-1 w-full mb-4"
+    />
+  </div>
+
+  <a href="/rezepte/create" class="btn btn-success"> Rezept hinzufügen </a>
+</header>
+
+<div>
   {#if filteredRecipes.length === 0}
     <p>Keine Rezepte gefunden.</p>
   {:else}
@@ -33,4 +41,27 @@
       {/each}
     </div>
   {/if}
-</section>
+</div>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
+
+  .search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search input {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 1rem;
+    margin-top: 1.5rem;
+    box-sizing: border-box;
+  }
+</style>

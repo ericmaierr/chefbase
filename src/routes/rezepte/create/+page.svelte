@@ -19,10 +19,10 @@ let ingredients = $state([
   }
 </script>
 
-<h1>Rezept hinzufügen</h1>
+<h2>Rezept hinzufügen</h2>
 <form method="POST" action="?/create">
   <div class="mb-3">
-    <label for="" class="form-label">Name</label>
+    <h3>Name</h3>
     <input
       name="name"
       class="form-control"
@@ -33,7 +33,7 @@ let ingredients = $state([
   </div>
 
   <div class="mb-3">
-    <label for="" class="form-label">Dauer</label>
+    <h3>Dauer in Minuten</h3>
     <input
       name="length"
       class="form-control"
@@ -44,7 +44,7 @@ let ingredients = $state([
   </div>
 
   <fieldset class="mb-3">
-  <legend>Zutaten</legend>
+  <h3>Zutaten</h3>
 
   {#each ingredients as ing, i}
     <div class="row mb-2 gx-2">
@@ -99,7 +99,7 @@ let ingredients = $state([
 </fieldset>
 
   <div class="mb-3">
-    <label for="" class="form-label">Anleitung</label>
+    <h3>Anleitung</h3>
     {#each steps as step, i}
       <input
         name="instructions"
@@ -118,7 +118,7 @@ let ingredients = $state([
     {/if}
   </div>
 
-  <button type="submit" class="btn btn-primary"> Rezept hinzufügen </button>
+  <button type="submit" class="btn btn-success"> Rezept hinzufügen </button>
 </form>
 
 {#if form?.success}

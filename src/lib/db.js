@@ -101,7 +101,7 @@ async function getRecipe(id) {
 
 // Rezept hinzufügen
 async function createRecipe(rezept) {
-  rezept.poster = "/images/placeholder.jpg"; // default poster
+  rezept.poster = "/images/placeholder.png"; // default poster
   rezept.recommended = false;
   rezept.watchlist = true;
   try {

@@ -4,7 +4,7 @@
 </script>
 
 <nav
-  class="navbar navbar-expand-lg bg-body-tertiary bg-dark"
+  class="navbar navbar-expand-lg"
   data-bs-theme="dark"
 >
   <div class="container-fluid">
@@ -24,7 +24,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/rezepte"
-            >Rezepte</a
+            >Alle Rezepte</a
           >
         </li>
         <li class="nav-item">
