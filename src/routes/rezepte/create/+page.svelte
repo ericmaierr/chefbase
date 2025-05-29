@@ -7,15 +7,10 @@
     steps = [...steps, ""];
   }
 
-let ingredients = $state([
-  { name: "", quantity: "", unit: "" }
- ]);
+  let ingredients = $state([{ name: "", quantity: "", unit: "" }]);
 
   function addIngredient() {
-    ingredients = [
-      ...ingredients,
-      { name: '', quantity: '', unit: '' }
-    ];
+    ingredients = [...ingredients, { name: "", quantity: "", unit: "" }];
   }
 </script>
 
@@ -44,62 +39,62 @@ let ingredients = $state([
   </div>
 
   <fieldset class="mb-3">
-  <h3>Zutaten</h3>
+    <h3>Zutaten</h3>
 
-  {#each ingredients as ing, i}
-    <div class="row mb-2 gx-2">
-      <div class="col">
-        <input
-          name="ingredientsName"
-          class="form-control"
-          type="text"
-          placeholder="Zutat"
-          bind:value={ingredients[i].name}
-          required={i === 0}
-        />
+    {#each ingredients as ing, i}
+      <div class="row mb-2 gx-2">
+        <div class="col">
+          <input
+            name="ingredientsName"
+            class="form-control"
+            type="text"
+            placeholder="Zutat"
+            bind:value={ingredients[i].name}
+            required={i === 0}
+          />
+        </div>
+        <div class="col">
+          <input
+            name="ingredientsQuantity"
+            class="form-control"
+            type="number"
+            placeholder="Menge"
+            bind:value={ingredients[i].quantity}
+            required={i === 0}
+          />
+        </div>
+        <div class="col">
+          <select
+            name="ingredientsUnit"
+            class="form-select"
+            bind:value={ingredients[i].unit}
+            required={i === 0}
+          >
+            <option value="" disabled selected>Einheit</option>
+            <option value="Stück">Stück</option>
+            <option value="EL">EL</option>
+            <option value="TL">TL</option>
+            <option value="g">g</option>
+            <option value="ml">ml</option>
+            <option value="Prise">Prise</option>
+          </select>
+        </div>
       </div>
-      <div class="col">
-        <input
-          name="ingredientsQuantity"
-          class="form-control"
-          type="number"
-          placeholder="Menge"
-          bind:value={ingredients[i].quantity}
-          required={i === 0}
-        />
-      </div>
-      <div class="col">
-        <select
-          name="ingredientsUnit"
-          class="form-select"
-          bind:value={ingredients[i].unit}
-          required={i === 0}
-        >
-          <option value="" disabled selected>Einheit</option>
-          <option value="Stück">Stück</option>
-          <option value="EL">EL</option>
-          <option value="TL">TL</option>
-          <option value="g">g</option>
-          <option value="ml">ml</option>
-          <option value="Prise">Prise</option>
-        </select>
-      </div>
-    </div>
-  {/each}
+    {/each}
 
-  {#if ingredients[ingredients.length - 1].name.trim() !== ''}
-    <button
-      type="button"
-      class="btn btn-secondary mb-3"
-      onclick={addIngredient}
-    >
-      Zutat hinzufügen
-    </button>
-  {/if}
-</fieldset>
+    {#if ingredients[ingredients.length - 1].name.trim() !== ""}
+      <button
+        type="button"
+        class="btn btn-secondary mb-3"
+        onclick={addIngredient}
+      >
+        Zutat hinzufügen
+      </button>
+    {/if}
+  </fieldset>
 
   <div class="mb-3">
-    <h3>Anleitung</h3>
+    <h3>Zubereitung</h3>
     {#each steps as step, i}
       <input
         name="instructions"
@@ -122,6 +117,5 @@ let ingredients = $state([
 </form>
 
 {#if form?.success}
-    <p>Rezept wurde erfolgreich angelegt!
-    </p>
+  <p>Rezept wurde erfolgreich angelegt!</p>
 {/if}

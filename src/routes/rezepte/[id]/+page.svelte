@@ -32,13 +32,11 @@
     </section>
 
     <div class="mt-4 d-flex gap-2">
-      <!-- Roter Löschen-Button -->
       <form method="POST" action="?/delete">
         <input type="hidden" name="id" value={rezept._id} />
         <button type="submit" class="btn btn-danger"> Rezept löschen </button>
       </form>
 
-      <!-- Grüner/Oranger Watchlist-Button -->
       {#if rezept.watchlist}
         <form method="POST" action="?/remove">
           <input type="hidden" name="id" value={rezept._id} />

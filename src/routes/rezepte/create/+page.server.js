@@ -19,15 +19,14 @@ export const actions = {
     const quantities = data.getAll('ingredientsQuantity').map(Number);
     const units = data.getAll('ingredientsUnit');
 
-    // 4) für jede Zeile: Zutat finden/erstellen und Link anlegen
+    // für jede Zeile: Zutat finden/erstellen und Link anlegen
     for (let i = 0; i < names.length; i++) {
       const name = names[i].trim();
-      if (!name) continue;  // überspringe leere Zeilen
+      if (!name) continue;
 
       // Zutat holen oder neu anlegen
       const ingredientId = await db.createIngredient(name);
 
-      // Menge und Einheit
       const quantity = quantities[i];
       const unit = units[i];
 

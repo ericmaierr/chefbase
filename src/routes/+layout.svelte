@@ -3,10 +3,7 @@
   let { children } = $props();
 </script>
 
-<nav
-  class="navbar navbar-expand-lg"
-  data-bs-theme="dark"
->
+<nav class="navbar navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">ChefBase</a>
     <button
